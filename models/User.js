@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     mobile_number: {
         type: Number,
         required: true
+    },
+    token: {
+        type: String,
+        default: ''
     }
 },
     {
