@@ -19,7 +19,11 @@ const userSchema = mongoose.Schema({
         type: Number,
         required: true
     }
-});
+},
+    {
+        timestamps: true
+    }
+);
 
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
