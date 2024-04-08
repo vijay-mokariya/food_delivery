@@ -6,7 +6,7 @@ const randomstring = require('randomstring');
 const sendResetPasswordMail = async (name, email, token) => {
     try {
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
+            host: 'smtp.ionos.com',
             port: 587,
             auth: {
                 user: process.env.emailUser,
@@ -18,7 +18,7 @@ const sendResetPasswordMail = async (name, email, token) => {
             from: process.env.emailUser,
             to: email,
             subject: `for reset password`,
-            html: '<p>Hii' + name + ',please copy the link and <a href="http://localhost:3000/user/resetPassword?token=' + token + '">reset your password </a> '
+            html: '<p>Hii ' + name + ',please copy the link and <a href="http://localhost:3000/user/resetPassword?token=' + token + '">reset your password </a> '
         }
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -47,7 +47,7 @@ const forgot_password = async (req, res) => {
 
             sendResetPasswordMail(userdata.username, userdata.email, randomString);
 
-            return res.status(401).json({ error: `Please check your inbox of mail and reset your password` });
+            return res.status(401).json({ success: true, msg: `Please check your inbox of mail and reset your password` });
 
         }
         else {
@@ -62,7 +62,7 @@ const forgot_password = async (req, res) => {
 }
 
 
-module.exports = forgot_password; 
+module.exports = forgot_password;
 
 
 
