@@ -1,9 +1,9 @@
-const categorys = require('../../models/Category');
+const User = require('../../models/User');
 
 const display = async (req, res) => {
     try {
-        const category = await categorys.find().populate('ref_id');
-        res.status(200).json(category);
+        const user = await User.findById(req.user._id).select('username email mobile_number');
+        return res.json(user);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });
@@ -11,6 +11,8 @@ const display = async (req, res) => {
 }
 
 module.exports = display
+
+
 
 
 

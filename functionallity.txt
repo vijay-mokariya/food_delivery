@@ -1,0 +1,23 @@
+==> Total api's for food delivery
+
+__User Side
+
+1. Login api     ---------|
+                          |-------------> 1 day
+2. Signup api    ---------|
+
+3. Forgot Password api and reset password api :-
+    - while user click on forgot password api that time firstly send the mail to for email verification and after that 
+      in mail provide a "reset password " api and that user reset the password.
+
+4. Category api's :- (this functionality contain category->subcategory and many more with one schema(give self reference to it))
+    - create
+    - display
+    - update
+    - delete
+
+5. Menu api's :-
+    - create
+    - display
+    - update
+    - delete

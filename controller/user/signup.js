@@ -1,6 +1,5 @@
 const user = require('../../models/User');
 const bcrypt = require('bcrypt');
-const { jwtAuthMiddleware, generateToken } = require('../../jwt');
 
 const create = async (req, res) => {
     try {
@@ -17,10 +16,6 @@ const create = async (req, res) => {
 
         const responce = await newuser.save();
         console.log("data saved");
-
-        const token = generateToken(responce.username);
-        console.log("token is:- ", token);
-        res.status(200).json({ responce: responce, token: token });
 
         res.status(200).json(responce);
     } catch (error) {

@@ -1,8 +1,8 @@
 const express = require('express');
-const app = express();
+const app = express.Router();
 
-app.post('/', require('../controller/menu/create'));
 app.get('/', require('../controller/menu/display'));
+app.post('/', require('../controller/menu/create'));
 app.put('/:id', require('../controller/menu/update'));
 app.delete('/:id', require('../controller/menu/delete'));
 

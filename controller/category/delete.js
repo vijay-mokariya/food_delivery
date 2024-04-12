@@ -1,19 +1,18 @@
-const category = require('../../models/Category')
+const categorys = require('../../models/Category')
 
-const deleteCategory = async (req, res) => {
+const deletecategory = async (req, res) => {
     try {
         const { id } = req.params;
+        const categorydelete = await categorys.findByIdAndDelete(id);
 
-        const deletecat = await category.findByIdAndDelete(id);
-        if (!deletecat) {
+        if (!categorydelete) {
             return res.status(404).json({ message: "not found" });
         }
-        res.status(200).json({ message: "user deleted successfully" });
-        console.log("data deleted")
+        res.status(200).json({ message: "category deleted successfully" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });
     }
-};
+}
 
-module.exports = deleteCategory;
+module.exports = deletecategory

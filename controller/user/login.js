@@ -11,12 +11,15 @@ const login = async (req, res) => {
 
         const userFind = await user.findOne({ email: email });
 
+        const userid = await user.findById(userFind.id);
+        //console.log(userid);
+
         if (!userFind || !(await userFind.comparePassword(password))) {
             return res.status(401).json({ error: 'Invalid email or Password' });
         }
 
         const payload = {
-            id: userFind.id
+            id: userFind._id
         }
         const token = generateToken(payload);
 

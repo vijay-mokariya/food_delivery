@@ -1,13 +1,14 @@
-const category = require('../../models/Category')
+const categorys = require('../../models/Category');
 
 const create = async (req, res) => {
     try {
         const data = req.body;
-        const newCategory = new category(data);
-        const responce = await newCategory.save();
+        const newcategory = new categorys(data);
 
-        res.status(200).json(responce);
+        const responce = await newcategory.save();
         console.log("data saved");
+
+        return res.status(200).json(responce);
 
     } catch (error) {
         console.log(error);
