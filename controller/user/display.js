@@ -2,7 +2,7 @@ const User = require('../../models/User');
 
 const display = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).select('username email mobile_number');
+        const user = await User.findById(req.authUser._id).select('username email mobile_number');
         return res.json(user);
     } catch (error) {
         console.log(error);

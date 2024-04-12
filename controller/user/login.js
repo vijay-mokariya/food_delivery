@@ -1,5 +1,7 @@
 const user = require('../../models/User');
-const { generateToken } = require('../../jwt');
+const jwt = require('jsonwebtoken');
+const { generateToken } = require('../../jwt')
+
 
 const login = async (req, res) => {
     try {
@@ -11,18 +13,19 @@ const login = async (req, res) => {
 
         const userFind = await user.findOne({ email: email });
 
-        const userid = await user.findById(userFind.id);
+        const userId = await user.findById(userFind.id);
         //console.log(userid);
 
         if (!userFind || !(await userFind.comparePassword(password))) {
             return res.status(401).json({ error: 'Invalid email or Password' });
         }
-
         const payload = {
-            id: userFind._id
+            userId: userFind._id
         }
-        const token = generateToken(payload);
 
+        const token = jwt.sign(payload, process.env.JWT_SECRET)
+
+        //const token = jwt.sign({ _id: userFind._id }, process.env.JWT_SECRET)
         res.json({ token })
         console.log("login successfully")
     } catch (err) {

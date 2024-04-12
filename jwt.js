@@ -7,11 +7,11 @@ const jwtAuthMiddleware = async (req, res, next) => {
     if (authorization && authorization.startsWith('Bearer')) {
         try {
             token = authorization.split(' ')[1];
-            const { _id } = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await User.findById(_id);
+            if (!token) return res.status(401).json({ error: 'No Token' });
+            const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await User.findById(userId);
 
-            console.log(req.user);
-            req.token = token;
+            req.authUser = user;
             next();
         } catch (error) {
             console.log(error)
@@ -23,8 +23,12 @@ const jwtAuthMiddleware = async (req, res, next) => {
     }
 }
 
-const generateToken = (userData) => {
-    return jwt.sign({ userData }, process.env.JWT_SECRET)
-}
 
-module.exports = { jwtAuthMiddleware, generateToken };
+module.exports = jwtAuthMiddleware;
+
+
+
+
+// const generateToken = (userData) => {
+//     return jwt.sign({userData}, process.env.JWT_SECRET)  //error userdata ne extra curly bracket ma pass karto hato etale natu thatu
+// }

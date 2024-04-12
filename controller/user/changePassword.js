@@ -9,8 +9,8 @@ const changePassword = async (req, res) => {
             if (newPassword !== password_confirmation) {
                 return res.send({ status: "failed", message: "New Passwords do not match" });
             }
-            const user = await User.findById(req.user._id)
-            console.log(user);
+
+            const user = await User.findById(req.authUser._id);
             if (!user) {
                 return res.send({ status: "failed", message: "User Not Found" });
             }
@@ -20,7 +20,7 @@ const changePassword = async (req, res) => {
             }
             const salt = await bcrypt.genSalt(10);
             const newHashedPassword = await bcrypt.hash(newPassword, salt);
-            const updatedUser = await User.findByIdAndUpdate(req.user._id, { $set: { password: newHashedPassword } }, { new: true });
+            const updatedUser = await User.findByIdAndUpdate(req.authUser._id, { $set: { password: newHashedPassword } }, { new: true });
 
             if (!updatedUser) {
                 return res.status(404).json({ status: "failed", message: "Failed to update password" });
