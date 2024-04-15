@@ -1,6 +1,8 @@
 const user = require('../../models/User');
 const nodemailer = require('nodemailer');
 const randomstring = require('randomstring');
+// const jwt = require('jsonwebtoken');
+
 
 
 const sendResetPasswordMail = async (name, email, token) => {
@@ -43,9 +45,14 @@ const forgot_password = async (req, res) => {
 
         if (userdata) {
             const randomString = randomstring.generate();
+            // const payload = {
+            //     userId: userdata._id
+            // }
+            // const token = jwt.sign(payload, process.env.JWT_SECRET + userdata.password)
+            // console.log(token);
             const data = await user.updateOne({ email: email }, { $set: { token: randomString } });
 
-            sendResetPasswordMail(userdata.username, userdata.email, randomString);
+            sendResetPasswordMail(userdata.firstName, userdata.email, randomString);
 
             return res.status(401).json({ success: true, msg: `Please check your inbox of mail and reset your password` });
 
@@ -56,7 +63,7 @@ const forgot_password = async (req, res) => {
         }
 
     } catch (error) {
-        console.error(err);
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
