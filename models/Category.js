@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const categorySchema = mongoose.Schema({
+const schema = mongoose.Schema({
     category: {
         type: String,
         required: true
@@ -10,14 +10,11 @@ const categorySchema = mongoose.Schema({
         ref: "category"
     }
 });
-
-categorySchema.pre('find', function () {
+schema.pre('find', function () {
     this.populate('ref_id', 'category -_id');
 })
 
-const category = mongoose.model('category', categorySchema);
+const category = mongoose.model('category', schema);
 module.exports = category;
 
 
-
-// virtual middleware study

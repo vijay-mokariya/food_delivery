@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('./models/User');
+const User = require('../models/User');
 
 const jwtAuthMiddleware = async (req, res, next) => {
     let token;
@@ -7,10 +7,8 @@ const jwtAuthMiddleware = async (req, res, next) => {
     if (authorization && authorization.startsWith('Bearer')) {
         try {
             token = authorization.split(' ')[1];
-            if (!token) return res.status(401).json({ error: 'No Token' });
             const { userId } = jwt.verify(token, process.env.JWT_SECRET);
             const user = await User.findById(userId);
-           // console.log(process.env.JWT_SECRET + user.password);
             req.authUser = user;
             next();
         } catch (error) {

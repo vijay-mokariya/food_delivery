@@ -1,6 +1,6 @@
 const categorys = require('../../models/Category')
 
-const deletecategory = async (req, res) => {
+const deleteCategory = async (req, res) => {
     try {
         const { id } = req.params;
         const categorydelete = await categorys.findByIdAndDelete(id);
@@ -15,4 +15,4 @@ const deletecategory = async (req, res) => {
     }
 }
 
-module.exports = deletecategory
+module.exports = deleteCategory
