@@ -4,8 +4,10 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const bodyparser = require('body-parser');
-app.use(bodyparser.json());
+// const bodyparser = require('body-parser');
+// app.use(bodyparser.json());
+
+app.use(express.json());
 
 app.use('/api/v1', require('./routes/index.routes'));
 
@@ -13,6 +15,7 @@ app.use('/api/v1', require('./routes/index.routes'));
 //     res.status(500).end(error.message);
 //     console.log(error);
 // });
+
 app.use(require('./middlewares/errorHandler'))
 
 app.listen(process.env.PORT, () => {

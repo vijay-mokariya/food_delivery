@@ -38,15 +38,6 @@ const schema = mongoose.Schema({
 );
 
 
-schema.methods.comparePassword = async function (candidatePassword) {
-    try {
-        const isMatch = await bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
-    } catch (err) {
-        throw err;
-    }
-}
-
 const user = mongoose.model("user", schema);
 module.exports = user;
 

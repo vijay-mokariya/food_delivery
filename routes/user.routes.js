@@ -11,6 +11,6 @@ app.post('/login', validations.loginValidation, validator, require('../controlle
 app.post('/forgotPassword', validations.forgotPasswordValidation, validator, require('../controllers/user/forgotPassword'));
 app.get('/resetPassword', validations.resetPasswordvalidation, validator, require('../controllers/user/resetPassword'));
 app.get('/me', jwtAuthMiddleware, require('../controllers/user/display'));
-app.put('/updateProfile', jwtAuthMiddleware, require('../controllers/user/updateProfile'));
+app.put('/updateProfile', validations.updateProfileValidation, validator, jwtAuthMiddleware, require('../controllers/user/updateProfile'));
 app.post('/changePassword', validations.changePasswordValidation, validator, jwtAuthMiddleware, require('../controllers/user/changePassword'));
 module.exports = app;

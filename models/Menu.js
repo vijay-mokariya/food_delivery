@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
-    menu_name: {
+    menuName: {
         type: String,
         required: true
     },
@@ -11,7 +11,7 @@ const schema = mongoose.Schema({
     },
     price: {
         type: Number,
-        required: true
+        required: true  
     },
     category_id: {
         type: mongoose.Schema.Types.ObjectId,

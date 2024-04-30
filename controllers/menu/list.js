@@ -1,6 +1,6 @@
 const menu = require('../../models/Menu');
 
-const list = async (req, res) => {
+const list = async (req, res,next) => {
     try {
         const category = await menu.find().populate('category_id', 'category -_id');
         res.status(200).json(category);

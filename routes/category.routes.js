@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express.Router();
+const validations = require('../utils/validations');
+const validator = require('../middlewares/validator');
 
 app.get('/', require('../controllers/category/list'));
-app.post('/', require('../controllers/category/create'));
-app.put('/:id', require('../controllers/category/update'));
+app.post('/', validations.categoryValidation, validator, require('../controllers/category/create'));
+app.put('/:id', validations.categoryValidation, validator, require('../controllers/category/update'));
 app.delete('/:id', require('../controllers/category/delete'));
 
 module.exports = app;

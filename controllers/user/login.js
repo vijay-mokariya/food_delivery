@@ -1,5 +1,7 @@
 const user = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 const login = async (req, res, next) => {
     try {
@@ -8,7 +10,9 @@ const login = async (req, res, next) => {
         const userFind = await user.findOne({ email: email });
         if (!(await userFind.email)) throw new Error('User not Found!')
 
-        if (!(await userFind.comparePassword(password))) throw new Error('Password not correct ')
+        const match = await bcrypt.compare(password, userFind.password);
+        if (!match) throw new Error('Invalid Password')
+        //if (!(await userFind.comparePassword(password))) throw new Error('Password not correct ')
 
         const payload = {
             userId: userFind._id

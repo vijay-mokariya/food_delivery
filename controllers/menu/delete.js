@@ -1,17 +1,16 @@
 const menu = require('../../models/Menu')
 
-const deleteMenu = async (req, res) => {
+const deleteMenu = async (req, res, next) => {
     try {
         const { id } = req.params;
         const menuDelete = await menu.findByIdAndDelete(id);
 
-        if (!menuDelete) {
-            return res.status(404).json({ message: "not found" });
-        }
+        if (!menuDelete) throw new Error('Menu not found')
+
         res.status(200).json({ message: "menu deleted successfully" });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Internal server error' });
+        next(error);
     }
 }
 

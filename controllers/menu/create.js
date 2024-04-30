@@ -1,6 +1,6 @@
 const menu = require('../../models/Menu');
 
-const create = async (req, res) => {
+const create = async (req, res,next) => {
     try {
         const data = req.body;
         const newMenu = new menu(data);
@@ -13,7 +13,6 @@ const create = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });
-
     }
 }
 
