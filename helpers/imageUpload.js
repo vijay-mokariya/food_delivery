@@ -12,4 +12,4 @@ const upload = multer({
     storage: storege
 })
 
-module.exports=upload;
+module.exports = upload;

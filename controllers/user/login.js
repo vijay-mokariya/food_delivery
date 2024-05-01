@@ -12,8 +12,7 @@ const login = async (req, res, next) => {
 
         const match = await bcrypt.compare(password, userFind.password);
         if (!match) throw new Error('Invalid Password')
-        //if (!(await userFind.comparePassword(password))) throw new Error('Password not correct ')
-
+ 
         const payload = {
             userId: userFind._id
         }
