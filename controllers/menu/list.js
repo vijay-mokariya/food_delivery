@@ -1,8 +1,12 @@
 const menu = require('../../models/Menu');
+const pagination = require('../../helpers/pagination');
 
-const list = async (req, res,next) => {
+const list = async (req, res, next) => {
     try {
-        const category = await menu.find().populate('category_id', 'category -_id');
+        const payload = req.body;
+
+        const category = await pagination(menu, payload); 
+
         res.status(200).json(category);
     } catch (error) {
         console.log(error);
@@ -17,3 +21,32 @@ module.exports = list
 
 
 
+
+
+
+
+
+
+
+
+
+
+// const menu = require('../../models/Menu');
+
+// const list = async (req, res, next) => {
+//     try {
+//         const page = parseInt(req.query.page) || 1;
+//         const limit = parseInt(req.query.limit) || 5;
+
+//         const skip = (page - 1) * limit;
+
+//         const category = await menu.find().populate('category_id', 'category -_id').skip(skip).limit(limit);
+//         res.status(200).json(category);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+
+// }
+
+// module.exports = list

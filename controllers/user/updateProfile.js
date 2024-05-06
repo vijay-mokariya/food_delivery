@@ -23,7 +23,9 @@ const update = async (req, res, next) => {
 
         if (!updateProfile) throw new Error('Failed to update profile');
 
-        res.status(200).json(updateProfile);
+        //res.status(200).json(updateProfile);
+        return res.status(200).json({ message: "user updated successfully" });
+
     } catch (error) {
         console.error(error);
         next(error);

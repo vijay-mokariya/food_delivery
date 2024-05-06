@@ -7,7 +7,9 @@ const deleteMenu = async (req, res, next) => {
 
         if (!menuDelete) throw new Error('Menu not found')
 
-        res.status(200).json({ message: "menu deleted successfully" });
+       // res.status(200).json({ message: "menu deleted successfully" });
+        return res.status(200).json({ message: "menu deleted successfully" });
+
     } catch (error) {
         console.log(error);
         next(error);

@@ -24,3 +24,44 @@ __User Side
 
 
     https://www.youtube.com/watch?v=70H_7C0kMbI
+
+
+
+
+
+
+
+
+
+
+// for request 
+{ 
+    options: 
+    { 
+        popuate: [ { path: 'comments', select: [''] }, ], 
+        select: [], 
+        pagination: true, 
+        page: 1, 
+        limit: 2 
+        order: {field: 'ASC|DESC'} 
+    }, 
+    query: 
+    { 
+
+    }, 
+    search: 
+    { 
+        keys: ['title', 'qty'], 
+        value: '' 
+    } 
+} 
+// for response 
+{ 
+    statusText: '', 
+    message: '', 
+    data: {} || [], 
+    pagination: 
+    { 
+        hasNext: true 
+    } 
+}

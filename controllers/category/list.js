@@ -2,7 +2,12 @@ const categorys = require('../../models/Category');
 
 const list = async (req, res) => {
     try {
-        const category = await categorys.find().populate('ref_id');
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+
+        const skip = (page - 1) * limit;
+
+        const category = await categorys.find().populate('ref_id').skip(skip).limit(limit);
         res.status(200).json(category);
     } catch (error) {
         console.log(error);

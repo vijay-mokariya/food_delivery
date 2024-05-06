@@ -15,7 +15,9 @@ const deleteuser = async (req, res, next) => {
 
         if (!deleteuser) throw new Error('user not found');
 
-        res.status(200).json({ message: "user deleted successfully" });
+        //res.status(200).json({ message: "user deleted successfully" });
+        return res.status(200).json({ message: "user deleted successfully" });
+
     } catch (error) {
         console.log(error);
         next(error);

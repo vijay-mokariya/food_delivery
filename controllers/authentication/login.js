@@ -8,11 +8,11 @@ const login = async (req, res, next) => {
         const { email, password } = req.body;
 
         const userFind = await user.findOne({ email: email });
-        if (!(await userFind.email)) throw new Error('User not Found!')
+        if (!userFind.email) throw new Error('User not Found!')
 
         const match = await bcrypt.compare(password, userFind.password);
-        if (!match) throw new Error('Invalid Password')
- 
+        if (!match) throw new Error('Invalid Password ');
+
         const payload = {
             userId: userFind._id
         }
@@ -29,4 +29,3 @@ const login = async (req, res, next) => {
 }
 
 module.exports = login;
-

@@ -1,6 +1,6 @@
 const menu = require('../../models/Menu');
 
-const create = async (req, res,next) => {
+const create = async (req, res, next) => {
     try {
         const data = req.body;
         const newMenu = new menu(data);
@@ -8,7 +8,9 @@ const create = async (req, res,next) => {
         const responce = await newMenu.save();
         console.log("data saved");
 
-        return res.status(200).json(responce);
+        // return res.status(200).json(responce);
+        return res.status(200).json({ message: "menu insert successfully" });
+
 
     } catch (error) {
         console.log(error);

@@ -16,7 +16,7 @@ app.use('/api/v1', require('./routes/index.routes'));
 //     console.log(error);
 // });
 
-app.use(require('./middlewares/errorHandler'))
+app.use(require('./middlewares/errorHandler')) 
 
 app.listen(process.env.PORT, () => {
     require('./services/database')
