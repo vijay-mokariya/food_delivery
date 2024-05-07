@@ -1,3 +1,15 @@
+{
+    "status": "Active",
+        "payment": "Success",
+            "$or": [],
+
+}
+
+
+
+
+
+
 const pagination = async (model, payload) => {
     const options = payload.options;
     const page = options.page || 1;

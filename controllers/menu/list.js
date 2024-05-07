@@ -5,14 +5,13 @@ const list = async (req, res, next) => {
     try {
         const payload = req.body;
 
-        const category = await pagination(menu, payload); 
+        const category = await pagination(menu, payload);
 
         res.status(200).json(category);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });
     }
-
 }
 
 module.exports = list
