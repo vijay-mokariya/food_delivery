@@ -1,4 +1,4 @@
-const demo = require('../../models/demo');
+const demo = require('../../models/Demo');
 
 const create = async (req, res) => {
     try {
@@ -10,8 +10,8 @@ const create = async (req, res) => {
         //return res.status(200).json(responce);
 
         res.status(200).json({
-            statusText: "Success",
-            message: "Data inserted successfully",
+            statusText: "SUCCESS",
+            message: "request executed successfully",
             data: response
         });
 

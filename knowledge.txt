@@ -8,8 +8,6 @@
 
 
 
-
-
 const pagination = async (model, payload) => {
     const options = payload.options;
     const page = options.page || 1;
@@ -19,7 +17,7 @@ const pagination = async (model, payload) => {
     const populate = options.populate;
 
     const query = payload.query || {};
-
+    query['$or'] = $or;
 
     // const search = payload?.search;
     // const keys = search?.keys;

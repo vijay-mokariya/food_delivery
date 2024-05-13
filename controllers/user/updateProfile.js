@@ -1,11 +1,46 @@
 const User = require('../../models/User');
 const fs = require('fs').promises;
+const CustomError = require('../../utils/HttpError');
 
-const update = async (req, res, next) => {
-    try {
+
+async function update(userId, image, params) {
+    const user = await User.findById(userId);
+
+    if (!user) throw new CustomError("User not found!", 404);
+
+    const updateFields = { ...params };
+
+    if (image) {
+        const url = `public/images/${user.profile}`;
+
+        if (user.profile) {
+            await fs.unlink(url)
+        }
+
+        updateFields.profile = image.filename;
+    }
+
+    const updateProfile = await User.findByIdAndUpdate(user._id, updateFields, { new: true });
+
+    if (!updateProfile) throw new CustomError("Failed to update profile", 400);
+
+    return updateProfile;
+}
+
+module.exports = update;
+
+
+
+
+
+
+
+
+/*
+try {
         const user = await User.findById(req.authUser._id);
 
-        if (!user) throw new Error('User not found!');
+        if (!user) throw new customError("User not found!", 404);
 
         const updateFields = { ...req.body };
 
@@ -21,15 +56,16 @@ const update = async (req, res, next) => {
 
         const updateProfile = await User.findByIdAndUpdate(user._id, updateFields, { new: true });
 
-        if (!updateProfile) throw new Error('Failed to update profile');
+        if (!updateProfile) throw new customError("Failed to update profile", 400);
 
-        //res.status(200).json(updateProfile);
-        return res.status(200).json({ message: "user updated successfully" });
+        return res.status(201).json({
+            statusText: "SUCCESS",
+            message: "user updated successfully",
+            data: updateProfile
+        });
 
     } catch (error) {
         console.error(error);
         next(error);
     }
-}
-
-module.exports = update;
+*/

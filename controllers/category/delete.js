@@ -1,19 +1,39 @@
-const categorys = require('../../models/Category')
+const Categorys = require('../../models/Category');
+const CustomError = require('../../utils/HttpError');
 
-const deleteCategory = async (req, res, next) => {
-    try {
+async function deleteCategory(params){
+    const { id } = params;
+    const categoryDelete = await Categorys.findByIdAndDelete(id);
+
+    if (!categoryDelete) throw new CustomError("category not found", 404);
+
+    return "category deleted successfully";
+}
+
+module.exports = deleteCategory
+
+
+
+
+
+
+/*
+try {
         const { id } = req.params;
         const categorydelete = await categorys.findByIdAndDelete(id);
 
-        if (!categorydelete) throw new Error('category not found');
+        if (!categorydelete) throw new customError("category not found", 404);
 
-        //res.status(200).json({ message: "category deleted successfully" });
-        return res.status(200).json({ message: "category deleted successfully" });
+
+        return res.status(200).json({
+            statusText: "SUCCESS",
+            message: "category deleted successfully"
+        });
 
     } catch (error) {
         console.log(error);
         next(error);
     }
-}
 
-module.exports = deleteCategory
+
+*/

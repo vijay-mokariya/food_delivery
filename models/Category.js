@@ -9,12 +9,16 @@ const schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"
     }
-});
-schema.pre('find', function () {
-    this.populate('ref_id', 'category -_id');
-})
+},
+    {
+        timestamps: true
+    }
+);
+// schema.pre('find', function () {
+//     this.populate('ref_id', 'category -_id');
+// })
 
-const category = mongoose.model('category', schema);
-module.exports = category;
+const Category = mongoose.model('category', schema);
+module.exports = Category;
 
 

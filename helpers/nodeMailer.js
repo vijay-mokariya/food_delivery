@@ -15,10 +15,10 @@ const sendResetPasswordMail = async (name, email, token) => {
             from: process.env.emailUser,
             to: email,
             subject: `for reset password`,
-            html: '<p>Hii ' + name + ',please copy the link and <a href="http://localhost:4000/api/v1/authentications/resetPassword?token=' + token + '">reset your password </a> '
+            html: '<p>Hii ' + name + ',please copy the link and <a href="http://localhost:4000/api/v1/authentication/resetPassword?token=' + token + '">reset your password </a> '
         }
 
-        transporter.sendMail(mailOptions, function (error, info) {
+        await transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             }

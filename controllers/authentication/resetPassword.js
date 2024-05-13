@@ -1,35 +1,58 @@
-const user = require('../../models/User');
+const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const CustomError = require('../../utils/HttpError');
 
-const reset_password = async (req, res, next) => {
-    try {
-        const token = req.query.token;
-        // const tokenData = await user.findOne({ token: token });
-        if (token) {
-            const { _id } = jwt.verify(token, process.env.JWT_SECRET);
-            const User = await user.findById(_id);
+async function resetPassword(token, params) {
+    const { password } = params;
+    // const tokenData = await user.findOne({ token: token });
+    if (!token) throw new CustomError("Token Not Found", 404);
 
-            if (!User) throw new Error("user not found!");
+    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(_id);
 
-            const password = req.body.password;
-            const salt = bcrypt.genSaltSync(10);
-            const hashpassword = bcrypt.hashSync(password, salt);
+    if (!user) throw new CustomError("User Not Found", 404);
 
-            const userData = await user.findByIdAndUpdate(User._id, { $set: { password: hashpassword, token: '' } }, { new: true });
-            //res.status(200).json({ msg: "user password has been reset", data: userData });
-            return res.status(200).json({ message: "user password has been reset" });
+    const salt = bcrypt.genSaltSync(10);
+    const hashpassword = bcrypt.hashSync(password, salt);
 
-        }
-        else {
-            throw new Error('token expired!!')
-        }
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
+    user.password = hashpassword;
+    user.token = null;
+    await user.save();
+
+    return "user password has been reset";
 }
 
-module.exports = reset_password;
+module.exports = resetPassword;
 
 
+
+
+
+
+
+
+
+// try {
+//     const token = req.query.token;
+//     // const tokenData = await user.findOne({ token: token });
+//     if (!token) throw new customError("Token Not Found", 404);
+
+//     const { _id } = jwt.verify(token, process.env.JWT_SECRET);
+//     const user = await User.findById(_id);
+
+//     if (!user) throw new customError("User Not Found", 404);
+
+//     const password = req.body.password;
+//     const salt = bcrypt.genSaltSync(10);
+//     const hashpassword = bcrypt.hashSync(password, salt);
+
+//     user.password = hashpassword;
+//     user.token = null;
+//     await user.save();
+
+//     return res.status(201).json({ data: {}, statusText: "SUCCESS", message: "user password has been reset" });
+// } catch (error) {
+//     console.error(error);
+//     next(error);
+// }

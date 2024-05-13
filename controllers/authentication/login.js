@@ -1,31 +1,57 @@
-const user = require('../../models/User');
+const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const CustomError = require('../../utils/HttpError');
 const bcrypt = require('bcrypt');
 
+async function login(params) {
+    const { email, password } = params;
 
-const login = async (req, res, next) => {
-    try {
-        const { email, password } = req.body;
+    const userData = await User.findOne({ email: email }).select("password");//here we use password because select=false
+    if (!userData) throw new CustomError("User not found", 404);
 
-        const userFind = await user.findOne({ email: email });
-        if (!userFind.email) throw new Error('User not Found!')
+    const match = await bcrypt.compare(password, userData.password);
+    if (!match) throw new CustomError("Invalid Password", 400);
 
-        const match = await bcrypt.compare(password, userFind.password);
-        if (!match) throw new Error('Invalid Password ');
+    const payload = { userId: userData._id };
 
-        const payload = {
-            userId: userFind._id
-        }
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET)
+    console.log("login successfully")
+    return token;
 
-        res.json({ token })
-        console.log("login successfully")
-
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
 }
 
 module.exports = login;
+
+
+
+
+
+
+
+
+// try {
+//     const { email, password } = req.body;
+
+//     const userFind = await user.findOne({ email: email }).select("password");//here we use password because select=false
+//     if (!userFind) throw new customError("User not found", 404);
+
+//     const match = await bcrypt.compare(password, userFind.password);
+//     if (!match) throw new customError("Invalid Password", 400);
+
+//     const payload = { userId: userFind._id };
+
+//     const token = jwt.sign(payload, process.env.JWT_SECRET)
+
+//     console.log("login successfully")
+//     return res.status(201).json({
+//         statusText: "SUCCESS",
+//         message: "request executed successfully",
+//         data: token
+//     });
+
+
+// } catch (error) {
+//     console.log(error);
+//     next(error);
+// }

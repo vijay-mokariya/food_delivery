@@ -1,22 +1,46 @@
-const categorys = require('../../models/Category')
+const Categorys = require('../../models/Category');
+const CustomError = require('../../utils/HttpError');
 
-const update = async (req, res, next) => {
+async function update(userId, params) {
+    const { id } = userId;
+
+    const updatecategory = await Categorys.findByIdAndUpdate(id, params);
+
+    if (!updatecategory) throw new CustomError("category not found", 404);
+
+    const updatec = await Categorys.findById(id);
+
+    return updatec
+
+}
+
+module.exports = update
+
+
+
+
+
+/*
+
 
     try {
         const { id } = req.params;
 
         const updatecategory = await categorys.findByIdAndUpdate(id, req.body);
 
-        if (!updatecategory) throw new Error('category not found');
+        if (!updatecategory) throw new customError("category not found", 404);
 
         const updatec = await categorys.findById(id);
-        // res.status(200).json(updatec);
-        return res.status(200).json({ message: "category update successfully" });
+        
+        return res.status(201).json({
+            statusText: "SUCCESS",
+            message: "category update successfully",
+            data: updatec
+        });
 
     } catch (error) {
         console.log(error);
         next(error);
     }
-}
 
-module.exports = update
+*/

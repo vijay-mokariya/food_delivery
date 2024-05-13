@@ -1,13 +1,17 @@
-const menu = require('../../models/Menu');
+const Menu = require('../../models/Menu');
 const pagination = require('../../helpers/pagination');
 
 const list = async (req, res, next) => {
     try {
         const payload = req.body;
 
-        const category = await pagination(menu, payload);
+        const data = await pagination(Menu, payload);
 
-        res.status(200).json(category);
+        return res.status(201).json({
+            statusText: "SUCCESS",
+            message: "request executed successfully",
+            data: data
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const schema = mongoose.Schema({
     firstName: {
@@ -17,15 +16,15 @@ const schema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     mobileNumber: {
         type: Number,
         required: true
     },
     profile: {
-        type: String,
-        required: true
+        type: String
     },
     token: {
         type: String,
@@ -38,8 +37,8 @@ const schema = mongoose.Schema({
 );
 
 
-const user = mongoose.model("user", schema);
-module.exports = user;
+const User = mongoose.model("user", schema);
+module.exports = User;
 
 
 

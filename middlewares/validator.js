@@ -17,13 +17,16 @@ const validate = validations => {
             const result = await validation.run(req);
             // if (result.errors.length) break;
         }
-
         const errors = validationResult(req);
         if (errors.isEmpty()) {
             return next();
         }
-
-        res.status(400).json({ errors: errors.array() });
+        //res.status(422).json({ errors: errors.array() });
+        res.status(422).json({
+            statusText: "Unprocessable Entity",
+            message: "Validation failed",
+            data: errors.array()
+        });
     };
 };
 module.exports = validate;

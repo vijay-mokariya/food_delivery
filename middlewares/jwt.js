@@ -10,6 +10,7 @@ const jwtAuthMiddleware = async (req, res, next) => {
             const { userId } = jwt.verify(token, process.env.JWT_SECRET);
             const user = await User.findById(userId);
             req.authUser = user;
+            console.log(req.authUser._id);
             next();
         } catch (error) {
             console.log(error)
@@ -30,3 +31,8 @@ module.exports = jwtAuthMiddleware;
 // const generateToken = (userData) => {
 //     return jwt.sign({userData}, process.env.JWT_SECRET)  //error userdata ne extra curly bracket ma pass karto hato etale natu thatu
 // }
+
+
+
+
+

@@ -1,14 +1,18 @@
-const categorys = require('../../models/Category');
+const Categorys = require('../../models/Category');
+const pagination = require('../../helpers/pagination');
+
 
 const list = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 5;
+        const payload = req.body;
 
-        const skip = (page - 1) * limit;
+        const data = await pagination(Categorys, payload);
 
-        const category = await categorys.find().populate('ref_id').skip(skip).limit(limit);
-        res.status(200).json(category);
+        return res.status(201).json({
+            statusText: "SUCCESS",
+            message: "request executed successfully",
+            data: data
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });

@@ -1,4 +1,4 @@
-const demo = require('../../models/demo');
+const demo = require('../../models/Demo');
 const pagination = require('../../helpers/pagination');
 
 const list = async (req, res, next) => {
@@ -8,7 +8,7 @@ const list = async (req, res, next) => {
         const data = await pagination(demo, payload);
 
         return res.status(200).json({
-            statusText: "Success",
+            statusText: "SUCCESS",
             message: "request executed successfully",
             data: data
         });

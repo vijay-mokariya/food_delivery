@@ -17,10 +17,14 @@ const schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"
     }
-});
+},
+    {
+        timestamps: true
+    }
+);
 
-const menu = mongoose.model('menu', schema);
-module.exports = menu;
+const Menu = mongoose.model('menu', schema);
+module.exports = Menu;
 
 
 

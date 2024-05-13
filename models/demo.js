@@ -19,28 +19,21 @@ const schema = mongoose.Schema({
         enum: ['Success', 'Fail'],
         default: 'Fail'
     },
+    amount: {
+        type: Number
+    },
     ref_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category"
     }
-});
+},
+    {
+        timestamps: true
+    }
+);
 
-const user = mongoose.model('demo', schema);
-module.exports = user;
+const User = mongoose.model('demo', schema);
+module.exports = User;
 
 
-/*
 
-{
-"firstName": "",
-"lastName": "",
-"status": "",
-"payment": "",
-"ref_id":""
-}
-
-66177edcdd6d0d22f355be51
-66177f47dd6d0d22f355be54
-66178d2a98d07eaeadeb1ce1
-
-*/

@@ -1,28 +1,29 @@
 const pagination = async (model, payload) => {
-    const options = payload.options;
-    const page = options.page || 1;
-    const limit = options.limit || 4;
-    const paginations = options.paginations || true;
-    if (!Array.isArray(options.populate)) options.populate = [];
-    const populate = options.populate;
+    let options = payload.options || {
+        page: 1, limit: 2, pagination: true
+    };
+    let page = options.page || 1;
+    let limit = options.limit || 2;
 
-    const query = payload.query || {};
+    let populate = options.populate;
+    if (!Array.isArray(options.populate)) populate = [];
+
+    const paginations = options.pagination;
+    let skip = (page - 1) * limit;
+    if (paginations === false) { skip = 0; limit = 0; }
 
 
-    // const search = payload?.search;
-    // const keys = search?.keys;
-    // if (search && Array.isArray(search.keys) && value) {
-    //     const value = search?.value;
-    //     const regex = new RegExp(value, 'i');
+    let query = payload.query || {};
 
-    //     var $or = [];
+    const search = payload.search || {};
+    const value = search.value;
+    const keys = search.keys;
 
-    //     const skip = (page - 1) * limit;
-    //     $or = keys.map(key => ({ [key]: { $regex: regex } }));
-    //     query['$or'] = $or;
-    // }
-    // query['$and'] = $and;
-    return response = model.find().populate(populate);
+    if (search && value) {
+        const $or = keys.map(key => ({ [key]: new RegExp(value, 'i') }));
+        query['$or'] = $or;
+    }
+    return model.find(query).populate(populate).skip(skip).limit(limit);
 }
 
 module.exports = pagination
