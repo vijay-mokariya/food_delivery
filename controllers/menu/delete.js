@@ -2,13 +2,13 @@ const Menu = require('../../models/Menu');
 const CustomError = require('../../utils/HttpError');
 
 
-async function deleteMenu(params){
+async function deleteMenu(params) {
     const { id } = params;
     const menuDelete = await Menu.findByIdAndDelete(id);
 
     if (!menuDelete) throw new CustomError("category not found", 404);
 
-    return "menu deleted successfully";
+    return {};
 }
 
 module.exports = deleteMenu;

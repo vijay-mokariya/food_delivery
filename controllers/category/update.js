@@ -2,15 +2,12 @@ const Categorys = require('../../models/Category');
 const CustomError = require('../../utils/HttpError');
 
 async function update(userId, params) {
-    const { id } = userId;
+    //const { id } = userId;
 
-    const updatecategory = await Categorys.findByIdAndUpdate(id, params);
-
+    const updatecategory = await Categorys.findByIdAndUpdate(userId, params, { new: true });
+    console.log(updatecategory);
     if (!updatecategory) throw new CustomError("category not found", 404);
-
-    const updatec = await Categorys.findById(id);
-
-    return updatec
+    return updatecategory
 
 }
 
@@ -18,11 +15,7 @@ module.exports = update
 
 
 
-
-
 /*
-
-
     try {
         const { id } = req.params;
 

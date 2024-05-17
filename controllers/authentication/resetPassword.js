@@ -20,7 +20,7 @@ async function resetPassword(token, params) {
     user.token = null;
     await user.save();
 
-    return "user password has been reset";
+    return {};
 }
 
 module.exports = resetPassword;

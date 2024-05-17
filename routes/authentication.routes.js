@@ -11,7 +11,6 @@ const forgotPassword = require('../controllers/authentication/forgotPassword');
 const login = require('../controllers/authentication/login');
 const resetPassword = require('../controllers/authentication/resetPassword');
 
-
 app.post('/signup', upload.single("profile"), validator(validations.signUpValidation), async function _signup(req, res, next) {
     try {
         const data = await signup(req.body, req.file);
@@ -25,12 +24,13 @@ app.post('/signup', upload.single("profile"), validator(validations.signUpValida
     }
 });
 
-app.get('/resetPassword', validator(validations.resetPasswordvalidation), async function _resetPassword(req, res, next) {
+app.post('/resetPassword', validator(validations.resetPasswordvalidation), async function _resetPassword(req, res, next) {
     try {
         const data = await resetPassword(req.query.token, req.body,);
-        return res.status(201).json({
+        return res.status(200).json({
             statusText: "SUCCESS",
-            message: data
+            message: "user password has been reset",
+            data: data
         });
     } catch (error) {
         next(error);
@@ -40,9 +40,9 @@ app.get('/resetPassword', validator(validations.resetPasswordvalidation), async 
 app.post('/login', validator(validations.loginValidation), async function _login(req, res, next) {
     try {
         const data = await login(req.body);
-        return res.status(201).json({
+        return res.status(200).json({
             statusText: "SUCCESS",
-            message: " login successfully",
+            message: "login successfully",
             data: data
         });
     } catch (error) {
@@ -53,10 +53,10 @@ app.post('/login', validator(validations.loginValidation), async function _login
 app.post('/forgotPassword', validator(validations.forgotPasswordValidation), async function _forgotPassword(req, res, next) {
     try {
         const data = await forgotPassword(req.body);
-        return res.status(201).json({
+        return res.status(200).json({
             statusText: "SUCCESS",
-            message: data
-
+            message: "Please check your inbox of mail and reset your password",
+            data: data
         });
     } catch (error) {
         next(error);
@@ -67,9 +67,9 @@ app.post('/forgotPassword', validator(validations.forgotPasswordValidation), asy
 app.post('/changePassword', validator(validations.changePasswordValidation), jwtAuthMiddleware, async function _changePassword(req, res, next) {
     try {
         const data = await changePassword(req.authUser._id, req.body);
-        return res.status(201).json({
+        return res.status(200).json({
             statusText: "SUCCESS",
-            message: "request executed successfully",
+            message: "password change successfully",
             data: data
         });
 

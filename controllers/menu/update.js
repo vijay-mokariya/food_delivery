@@ -3,15 +3,15 @@ const CustomError = require('../../utils/HttpError');
 
 
 async function update(userId, params) {
-    const { id } = userId;
+    //const { id } = userId;
 
-    const updateMenu = await Menu.findByIdAndUpdate(id, params);
+    const updateMenu = await Menu.findByIdAndUpdate(userId, params, { new: true });
+    //const updatecategory = await Categorys.findByIdAndUpdate(userId, params, );
+    console.log(updateMenu);
 
     if (!updateMenu) throw new CustomError("category not found", 404);
 
-    const updatec = await Menu.findById(id);
-
-    return updatec
+    return updateMenu
 
 }
 

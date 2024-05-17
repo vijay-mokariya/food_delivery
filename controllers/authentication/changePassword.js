@@ -18,7 +18,7 @@ async function changePassword(userId,params){
     
     if (!updatedUser) throw new CustomError('Failed to update password', 400);
     
-    return "pasword change successfully";
+    return {};
 }
 
 module.exports = changePassword;

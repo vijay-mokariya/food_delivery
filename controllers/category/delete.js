@@ -7,7 +7,7 @@ async function deleteCategory(params){
 
     if (!categoryDelete) throw new CustomError("category not found", 404);
 
-    return "category deleted successfully";
+    return {};
 }
 
 module.exports = deleteCategory

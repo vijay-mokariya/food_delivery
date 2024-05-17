@@ -1,9 +1,9 @@
 const pagination = async (model, payload) => {
     let options = payload.options || {
-        page: 1, limit: 2, pagination: true
+        page: 1, limit: 10, pagination: true
     };
     let page = options.page || 1;
-    let limit = options.limit || 2;
+    let limit = options.limit || 10;
 
     let populate = options.populate;
     if (!Array.isArray(options.populate)) populate = [];

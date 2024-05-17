@@ -1,16 +1,15 @@
 const Categorys = require('../../models/Category');
 
 async function create(params) {
-    const { category,ref_id } = params;
+    const { category, ref_id } = params;
 
-        const newcategory = new Categorys({
-            category:category,
-            ref_id:ref_id
-        });
+    const newcategory = new Categorys({
+        category: category,
+        ref_id: ref_id
+    });
 
-        const responce = await newcategory.save();
-        return responce;
-   
+    const responce = await newcategory.save();
+    return responce;
 }
 
 module.exports = create;

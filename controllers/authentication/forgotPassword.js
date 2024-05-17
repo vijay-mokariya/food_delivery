@@ -19,9 +19,9 @@ async function forgotPassword(params) {
     userData.save();
     //const data = await user.updateOne({ email: email }, { $set: { token: token } });
 
-    sendResetPasswordMail(userData.firstName, userData.email, token);
+    await sendResetPasswordMail(userData.firstName, userData.email, token);
 
-    return "Please check your inbox of mail and reset your password";
+    return {};
 }
 
 module.exports = forgotPassword;

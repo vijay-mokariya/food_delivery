@@ -26,6 +26,14 @@ const schema = mongoose.Schema({
     profile: {
         type: String
     },
+    attempt: {
+        type: Number,
+        default: 0
+    },
+    lockTime: {
+        type: String,
+        default: null
+    },
     token: {
         type: String,
         default: ''
@@ -36,9 +44,5 @@ const schema = mongoose.Schema({
     }
 );
 
-
 const User = mongoose.model("user", schema);
 module.exports = User;
-
-
-

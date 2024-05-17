@@ -6,12 +6,12 @@ const upload = require('../helpers/imageUpload');
 const validator = require('../middlewares/validator');
 
 const updateProfile = require('../controllers/user/updateProfile');
-const display = require('../controllers/user/display');
+const displayProfile = require('../controllers/user/display');
 
 app.get('/me', jwtAuthMiddleware, async function _display(req, res, next) {
     try {
-        const data = await display(req.authUser._id);
-        return res.status(201).json({
+        const data = await displayProfile(req.authUser._id);
+        return res.status(200).json({
             statusText: "SUCCESS",
             message: "request executed successfully",
             data: data
@@ -22,10 +22,10 @@ app.get('/me', jwtAuthMiddleware, async function _display(req, res, next) {
 });
 
 
-app.put('/updateProfile', upload.single('profile'), validator(validations.updateProfileValidation), jwtAuthMiddleware, async function _updateProfile(req, res, next) {
+app.patch('/updateProfile', upload.single('profile'), validator(validations.updateProfileValidation), jwtAuthMiddleware, async function _updateProfile(req, res, next) {
     try {
         const data = await updateProfile(req.authUser._id, req.file, req.body);
-        return res.status(201).json({
+        return res.status(200).json({
             statusText: "SUCCESS",
             message: "user updated successfully",
             data: data

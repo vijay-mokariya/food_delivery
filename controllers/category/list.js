@@ -1,9 +1,25 @@
 const Categorys = require('../../models/Category');
 const pagination = require('../../helpers/pagination');
 
+async function list(params) {
+    const data = await pagination(Categorys, params);
 
-const list = async (req, res) => {
-    try {
+    return data;
+}
+
+module.exports = list
+
+
+
+
+
+
+
+
+
+/*
+
+try {
         const payload = req.body;
 
         const data = await pagination(Categorys, payload);
@@ -17,9 +33,5 @@ const list = async (req, res) => {
         console.log(error);
         res.status(500).json({ error: 'Internal server error' });
     }
-}
 
-module.exports = list
-
-
-
+*/

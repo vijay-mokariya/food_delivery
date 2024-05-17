@@ -4,11 +4,23 @@ const validations = require('../utils/validations');
 const validator = require('../middlewares/validator');
 
 const category = require('../controllers/category/create');
-const categoryDelete = require('../controllers/category/delete');
+const deleteCategory = require('../controllers/category/delete');
 const updateCategory = require('../controllers/category/update');
+const displayCategory = require('../controllers/category/list');
 
+app.get('/', async function _displayCategory(req, res, next) {
+    try {
+        const data = await displayCategory(req.body);
 
-app.get('/', require('../controllers/category/list'));
+        return res.status(200).json({
+            statusText: "SUCCESS",
+            message: "request executed successfully",
+            data: data
+        });
+    } catch (error) {
+        next(error);
+    }
+});
 
 app.post('/', validator(validations.categoryValidation), async function _category(req, res, next) {
     try {
@@ -23,10 +35,10 @@ app.post('/', validator(validations.categoryValidation), async function _categor
     }
 });
 
-app.put('/:id', validator(validations.categoryValidation), async function _updateCategory(req, res, next) {
+app.patch('/:id', validator(validations.categoryValidation), async function _updateCategory(req, res, next) {
     try {
-        const data = await updateCategory(req.params, req.body);
-        return res.status(201).json({
+        const data = await updateCategory(req.params.id, req.body);
+        return res.status(200).json({
             statusText: "SUCCESS",
             message: "category update successfully",
             data: data
@@ -38,10 +50,11 @@ app.put('/:id', validator(validations.categoryValidation), async function _updat
 
 app.delete('/:id', async function _categoryDelete(req, res, next) {
     try {
-        const data = await categoryDelete(req.params);
-        return res.status(201).json({
+        const data = await deleteCategory(req.params);
+        return res.status(200).json({
             statusText: "SUCCESS",
-            message: data
+            message: "category deleted successfully",
+            data: data
         });
     } catch (error) {
         next(error)

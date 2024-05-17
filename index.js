@@ -10,6 +10,8 @@ app.use(cors());
 
 app.use(express.json());
 
+app.set('view engine','ejs');
+
 app.use('/api/v1', require('./routes/index.routes'));
 
 // app.use((error, req, res, next) => {
