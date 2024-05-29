@@ -1,16 +1,5 @@
 const { validationResult } = require('express-validator');
 
-// const validator = async (req, res, next) => {
-//     const error = validationResult(req);
-
-//     if (!error.isEmpty()) {
-//         return res.status(400).json({ error: error.array() });
-//     }
-//     next();
-// }
-
-// module.exports = validator
-
 const validate = validations => {
     return async (req, res, next) => {
         for (let validation of validations) {
@@ -21,7 +10,6 @@ const validate = validations => {
         if (errors.isEmpty()) {
             return next();
         }
-        //res.status(422).json({ errors: errors.array() });
         res.status(422).json({
             statusText: "Unprocessable Entity",
             message: "Validation failed",

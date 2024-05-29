@@ -44,5 +44,17 @@ const schema = mongoose.Schema({
     }
 );
 
+// schema.pre('save', async function (next) {
+//     try {
+//         const existUser = await User.findOne({ email: this.email });
+//         if (existUser) {
+//             return next(new Error('Email already exists'));
+//         }
+//         next();
+//     } catch (err) {
+//         next(err);
+//     }
+// });
+
 const User = mongoose.model("user", schema);
 module.exports = User;

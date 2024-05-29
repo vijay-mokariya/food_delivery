@@ -2,6 +2,7 @@ const User = require('../../models/User');
 const customError = require('../../utils/HttpError');
 const bcrypt = require('bcrypt');
 
+
 async function signup(params, image) {
     const { firstName, lastName, email, password, mobileNumber } = params;
 

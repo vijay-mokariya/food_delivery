@@ -2,7 +2,6 @@ const User = require('../../models/User');
 const fs = require('fs').promises;
 const CustomError = require('../../utils/HttpError');
 
-
 async function update(userId, image, params) {
     const user = await User.findById(userId);
 

@@ -3,7 +3,7 @@ const pagination = async (model, payload) => {
         page: 1, limit: 10, pagination: true
     };
     let page = options.page || 1;
-    let limit = options.limit || 10;
+    let limit = options.limit || 2;
 
     let populate = options.populate;
     if (!Array.isArray(options.populate)) populate = [];
@@ -27,3 +27,35 @@ const pagination = async (model, payload) => {
 }
 
 module.exports = pagination
+
+
+
+
+
+
+
+
+/*
+
+{
+    "options":{
+        "page":2,
+        "limit":5,
+        "populate":[{
+            "path":"ref_id"
+        }]
+    },
+    "query":{
+       "status":"Inactive",
+        "amount": {
+        "$gte": 200,
+        "$lte": 320
+        }
+    },
+    "search":{
+        "keys":["firstName"],
+        "value":"ume"
+    }
+}
+
+*/

@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express.Router();
+
 const jwtAuthMiddleware = require('../middlewares/jwt');
 const validations = require('../utils/validations');
 const upload = require('../helpers/imageUpload');

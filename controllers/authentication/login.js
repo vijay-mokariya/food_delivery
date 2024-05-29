@@ -29,6 +29,7 @@ async function login(params) {
         }
 
         await userData.save();
+    
         throw new CustomError("Invalid Password", 400);
     }
 
@@ -44,8 +45,6 @@ async function login(params) {
 }
 
 module.exports = login;
-
-
 
 
 
@@ -78,3 +77,7 @@ module.exports = login;
 //     console.log(error);
 //     next(error);
 // }
+
+
+
+

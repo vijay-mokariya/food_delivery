@@ -3,6 +3,7 @@ const User = require('../../models/User');
 const CustomError = require('../../utils/HttpError');
 const jwt = require("jsonwebtoken");
 const sendResetPasswordMail = require('../../helpers/nodeMailer')
+//const formatName='forgotPasswor.ejs';
 
 async function forgotPassword(params) {
     const { email } = params
@@ -16,10 +17,11 @@ async function forgotPassword(params) {
     });
 
     userData.token = token;
-    userData.save();
-    //const data = await user.updateOne({ email: email }, { $set: { token: token } });
+    await userData.save();
+    
+    //const data = await User.updateOne({ email: email }, { $set: { token: token } });
 
-    await sendResetPasswordMail(userData.firstName, userData.email, token);
+    await sendResetPasswordMail("forgotPasswor", { name: userData.firstName, email: userData.email, token: userData.token });
 
     return {};
 }

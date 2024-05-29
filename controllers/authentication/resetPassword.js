@@ -10,7 +10,7 @@ async function resetPassword(token, params) {
 
     const { _id } = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(_id);
-
+    console.log(user);
     if (!user) throw new CustomError("User Not Found", 404);
 
     const salt = bcrypt.genSaltSync(10);
