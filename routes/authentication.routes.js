@@ -11,6 +11,7 @@ const changePassword = require('../controllers/authentication/changePassword');
 const forgotPassword = require('../controllers/authentication/forgotPassword');
 const login = require('../controllers/authentication/login');
 const resetPassword = require('../controllers/authentication/resetPassword');
+const otpVerify = require('../controllers/authentication/otpVerify');
 
 app.post('/signup', upload.single("profile"), validator(validations.signUpValidation), async function _signup(req, res, next) {
     try {
@@ -40,10 +41,10 @@ app.post('/resetPassword', validator(validations.resetPasswordvalidation), async
 
 app.post('/login', validator(validations.loginValidation), async function _login(req, res, next) {
     try {
-        const data = await login(req.body);
+        const data = await login(req.session.user,req.body);
         return res.status(200).json({
             statusText: "SUCCESS",
-            message: "login successfully",
+            message: "firstly verify the OTP that send on your email",
             data: data
         });
     } catch (error) {
@@ -74,6 +75,19 @@ app.post('/changePassword', validator(validations.changePasswordValidation), jwt
             data: data
         });
 
+    } catch (error) {
+        next(error);
+    }
+});
+
+app.post('/otpVerify', async function _otpVerify(req, res, next) {
+    try {
+        const data = await otpVerify(req.session.user,req.body);
+        return res.status(201).json({
+            statusText: "SUCCESS",
+            message: "request executed successfully",
+            data: data
+        });
     } catch (error) {
         next(error);
     }

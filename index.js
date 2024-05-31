@@ -3,14 +3,24 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const httpError = require('./utils/HttpError');
+
+const session = require('express-session');
+
 app.use(cors());
+
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+}));
+
 
 // const bodyparser = require('body-parser');
 // app.use(bodyparser.json());
 
 app.use(express.json());
 
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 
 app.use('/api/v1', require('./routes/index.routes'));
 

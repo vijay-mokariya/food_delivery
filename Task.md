@@ -3,17 +3,8 @@
     - learn about ejs
 ## mail send after give responce [DONE]
 ## Learn Mongoose pre & post hooks [DONE]
-## Fetch category by its ID and populate menu of that category 
+## Fetch category by its ID and populate menu of that category [DONE]
+## if email password correct send otp to the user email
+
+
 ## Third party API integration
-
-
-{
-  "_id": {
-    "$oid": "66177edcdd6d0d22f355be51"
-  },
-  "category": "Appetizers",
-  menus: [
-    
-  ]
-  "__v": 0
-}

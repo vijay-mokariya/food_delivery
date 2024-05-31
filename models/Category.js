@@ -10,10 +10,18 @@ const schema = mongoose.Schema({
         ref: "category"
     }
 },
+    { toJSON: { virtuals: true } },
     {
         timestamps: true
     }
 );
+schema.virtual('menu', {
+    ref: 'menu',
+    localField: '_id',
+    foreignField: 'category_id'
+});
+
+
 // schema.pre('find', function () {
 //     this.populate('ref_id', 'category -_id');
 // })

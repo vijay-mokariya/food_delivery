@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>otp</title>
+</head>
+
+<body>
+    <h1>your otp is <%=data.otp%>
+    </h1><br>
+    please copy this link and
+    <a href="http://localhost:4000/api/v1/authentication/otpVerify?token=<%=data.token %>">enter your otp </a>
+</body>
+
+</html>

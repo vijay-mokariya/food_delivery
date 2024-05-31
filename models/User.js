@@ -37,6 +37,18 @@ const schema = mongoose.Schema({
     token: {
         type: String,
         default: ''
+    },
+    otp:{
+        type:String,
+        default:0
+    },
+    otpExpireAt:{
+        type:Date,
+        default:null
+    },
+    otpToken:{
+        type: String,
+        default: null
     }
 },
     {
