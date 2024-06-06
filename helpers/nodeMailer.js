@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
-const sendResetPasswordMail = async (formatName, data) => {
+const sendMail = async (formatName, data) => {
     try {
         const transporter = nodemailer.createTransport({
             host: 'smtp.ionos.com',
@@ -30,7 +30,7 @@ const sendResetPasswordMail = async (formatName, data) => {
         throw error;
     }
 }
-module.exports = sendResetPasswordMail;
+module.exports = sendMail;
 
 
 

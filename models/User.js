@@ -33,22 +33,6 @@ const schema = mongoose.Schema({
     lockTime: {
         type: String,
         default: null
-    },
-    token: {
-        type: String,
-        default: ''
-    },
-    otp:{
-        type:String,
-        default:0
-    },
-    otpExpireAt:{
-        type:Date,
-        default:null
-    },
-    otpToken:{
-        type: String,
-        default: null
     }
 },
     {

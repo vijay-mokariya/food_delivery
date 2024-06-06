@@ -4,15 +4,9 @@ const cors = require('cors');
 const app = express();
 const httpError = require('./utils/HttpError');
 
-const session = require('express-session');
 
 app.use(cors());
 
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-}));
 
 
 // const bodyparser = require('body-parser');

@@ -1,9 +1,8 @@
 const User = require('../../models/User');
-//const randomstring = require('randomstring');
+const Token = require('../../models/Token');
 const CustomError = require('../../utils/HttpError');
-const jwt = require("jsonwebtoken");
-const sendResetPasswordMail = require('../../helpers/nodeMailer')
-//const formatName='forgotPasswor.ejs';
+const moment = require('moment');
+const sendMail = require('../../helpers/nodeMailer');
 
 async function forgotPassword(params) {
     const { email } = params
@@ -11,22 +10,44 @@ async function forgotPassword(params) {
 
     if (!userData) throw new CustomError('Email does not exists', 404);
 
-    //const randomString = randomstring.generate();
-    const token = jwt.sign({ _id: userData._id }, process.env.JWT_SECRET, {
-        expiresIn: "5m",
-    });
+    const token = crypto.randomUUID();
 
-    userData.token = token;
-    await userData.save();
-    
-    //const data = await User.updateOne({ email: email }, { $set: { token: token } });
+    await Token.findOneAndUpdate({ userId: userData.id }, {
+        userId: userData.id,
+        'userToken.token': token,
+        'userToken.type': 'FORGET_PASSWORD_TOKEN',
+        'userToken.expired': moment().add(3, 'minutes')
+    }, { upsert: true });
 
-    await sendResetPasswordMail("forgotPasswor", { name: userData.firstName, email: userData.email, token: userData.token });
+    console.log(token);
+    await sendMail("forgotPasswor", { name: userData.firstName, email: userData.email, token: token });
 
     return {};
 }
 
 module.exports = forgotPassword;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

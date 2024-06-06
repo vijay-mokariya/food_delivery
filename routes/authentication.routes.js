@@ -41,7 +41,7 @@ app.post('/resetPassword', validator(validations.resetPasswordvalidation), async
 
 app.post('/login', validator(validations.loginValidation), async function _login(req, res, next) {
     try {
-        const data = await login(req.session.user,req.body);
+        const data = await login(req.body);
         return res.status(200).json({
             statusText: "SUCCESS",
             message: "firstly verify the OTP that send on your email",
@@ -82,7 +82,7 @@ app.post('/changePassword', validator(validations.changePasswordValidation), jwt
 
 app.post('/otpVerify', async function _otpVerify(req, res, next) {
     try {
-        const data = await otpVerify(req.session.user,req.body);
+        const data = await otpVerify(req.headers.authorization,req.body);
         return res.status(201).json({
             statusText: "SUCCESS",
             message: "request executed successfully",

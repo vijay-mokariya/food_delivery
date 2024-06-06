@@ -1,15 +1,20 @@
 const User = require('../../models/User');
+const Token = require('../../models/Token');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const moment=require('moment');
 const CustomError = require('../../utils/HttpError');
 
-async function resetPassword(token, params) {
+async function resetPassword(userToken, params) {
     const { password } = params;
-    // const tokenData = await user.findOne({ token: token });
-    if (!token) throw new CustomError("Token Not Found", 404);
+    if (!userToken) throw new CustomError("Token Not Found", 404);
 
-    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(_id);
+    const token = await Token.findOne({ 'userToken.token': userToken });
+    if (!token) throw new CustomError('User Token not found', 404);
+    if (!(token.userToken.type === 'FORGET_PASSWORD_TOKEN')) throw new CustomError('Unauthorized user', 401)
+
+    if (moment(token.userToken.expired).isBefore(moment())) throw new CustomError("Token expired,please regenerate Token", 401);
+
+    const user = await User.findById(token.userId);
     console.log(user);
     if (!user) throw new CustomError("User Not Found", 404);
 
@@ -17,7 +22,6 @@ async function resetPassword(token, params) {
     const hashpassword = bcrypt.hashSync(password, salt);
 
     user.password = hashpassword;
-    user.token = null;
     await user.save();
 
     return {};
