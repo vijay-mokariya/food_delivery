@@ -13,7 +13,7 @@ const jwtAuthMiddleware = async (req, res, next) => {
         if (!(token.userToken.type === 'ACCESS_TOKEN')) throw new CustomError('Unauthorized user', 401);
 
         const user = await User.findOne({ _id: token.userId });
-        if (!user) throw new CustomError('User not found', 404)
+        if (!user) throw new CustomError('User not found', 404);
 
         req.authUser = user;
         next();
@@ -89,3 +89,8 @@ module.exports = jwtAuthMiddleware;
 // const generateToken = (userData) => {
 //     return jwt.sign({userData}, process.env.JWT_SECRET)  //error userdata ne extra curly bracket ma pass karto hato etale natu thatu
 // }
+
+
+
+
+

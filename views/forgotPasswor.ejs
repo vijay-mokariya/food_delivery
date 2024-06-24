@@ -11,7 +11,7 @@
     <p>
     <h1> Hii <%=data.name %>
     </h1> <br>please copy this link and
-    <a href="http://localhost:4000/api/v1/authentication/resetPassword?token=<%=data.token %>">reset
+    <a href="<%= process.env.baseUrl%>/authentication/resetPassword?token=<%=data.token %>">reset
         your
         password </a>
     </p>

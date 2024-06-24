@@ -21,7 +21,7 @@ async function login(params) {
         userData.lockTime = null;
     }
 
-    const match = await bcrypt.compare(password, userData.password);
+    const match = bcrypt.compareSync(password, userData.password);
 
     if (!match) {
         userData.attempt++;
@@ -35,10 +35,12 @@ async function login(params) {
         throw new CustomError("Invalid Password", 400);
     }
 
+
     const otp = Math.floor(1000 + Math.random() * 9000);
 
     console.log(otp);
     //await sendMail("otpMail", { email: userData.email, otp: otp });
+    await sendMail("otpMail", { email: userData.email, otp: otp });
 
     const unique = crypto.randomUUID();
 
@@ -55,7 +57,7 @@ async function login(params) {
         'userToken.token': unique,
         'userToken.type': '2FA_TOKEN',
         'userToken.expired': moment().add(3, 'minutes')
-    }, { upsert: true });
+    }, { upsert: true, });
 
 
     return unique;
@@ -129,3 +131,7 @@ module.exports = login;
 
 
 */
+
+
+
+

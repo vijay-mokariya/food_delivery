@@ -18,7 +18,8 @@ const schema = mongoose.Schema({
 schema.virtual('menu', {
     ref: 'menu',
     localField: '_id',
-    foreignField: 'category_id'
+    foreignField: 'category_id',
+    justOne: true
 });
 
 

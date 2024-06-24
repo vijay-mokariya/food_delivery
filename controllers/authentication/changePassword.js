@@ -8,7 +8,7 @@ async function changePassword(userId,params){
     const userData = await User.findById(userId).select("password");
     
     const match = bcrypt.compareSync(oldPassword, userData.password);
-    if (!match) throw new CustomError('Invalid Old Password', 401)
+    if (!match) throw new CustomError('Invalid Old Password', 401);
 
     //const salt = bcrypt.genSaltSync(10);
     const newHashedPassword = bcrypt.hashSync(newPassword, 10);

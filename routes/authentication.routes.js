@@ -13,7 +13,7 @@ const login = require('../controllers/authentication/login');
 const resetPassword = require('../controllers/authentication/resetPassword');
 const otpVerify = require('../controllers/authentication/otpVerify');
 
-app.post('/signup', upload.single("profile"), validator(validations.signUpValidation), async function _signup(req, res, next) {
+app.post('/signup', validator(validations.signUpValidation), upload.single("profile"), async function _signup(req, res, next) {
     try {
         const data = await signup(req.body, req.file);
         return res.status(201).json({

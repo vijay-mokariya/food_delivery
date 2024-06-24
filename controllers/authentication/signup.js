@@ -1,7 +1,5 @@
 const User = require('../../models/User');
-const customError = require('../../utils/HttpError');
 const bcrypt = require('bcrypt');
-
 
 async function signup(params, image) {
     const { firstName, lastName, email, password, mobileNumber } = params;
@@ -16,8 +14,14 @@ async function signup(params, image) {
         profile: image.filename
     });
 
-    const responce = await newUser.save();
-    return responce;
+    let response = await newUser.save();
+    return {
+        firstName: response.firstName,
+        lastName: response.lastName,
+        email: response.email,
+        mobileNumber: response.mobileNumber,
+        profile: response.profile
+    }
 }
 
 module.exports = signup;
