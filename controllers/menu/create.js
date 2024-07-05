@@ -2,18 +2,19 @@ const Menu = require('../../models/Menu');
 
 
 async function create(params) {
-    const { menu_name,description,price,category_id } = params;
+    const { menu_name, description, price, category_id, name } = params;
 
-        const newMenu = new Menu({
-            menu_name:menu_name,
-            description:description,
-            price:price,
-            category_id:category_id
-        });
+    const newMenu = new Menu({
+        menu_name: menu_name,
+        description: description,
+        price: price,
+        category_id: category_id,
+        name: name
+    });
 
-        const responce = await newMenu.save();
-        return responce;
-   
+    const responce = await newMenu.save();
+    return responce;
+
 }
 
 

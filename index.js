@@ -30,24 +30,102 @@ app.listen(process.env.PORT, () => {
 });
 
 
-
-
-
-
-
-
-
 /*
+use of graphQL
 
-i have make one website that name is easycollab.
-this website basically use into a internal company uses.
-in this website many role like emplooyee,admin,marketing team,project manager,etc...
-this website work for comapany marketing team take project from the outside for example upwork,linkdin etc and
-than they bidding for it if requirement fulfill than that team create a application that contain all detaial related that project in the website and
-when client ready for make project in our company than marketing team convert that application into inquery than
-company project manager metting with the cliend and descussion related the project if all is good and client ready to make project with us than
-that inquery convert into the project,
-and employee also give their task update,they order the snacks and book they given by our organization.
-that all about my website
+step 1:- 
+        npm i express-graphql graphql axios
+step 2:-
+        const { buildSchema } = require('graphql');
+        const { graphqlHTTP } = require('express-graphql');
+        const axios = require('axios');
+step 3:- use 
+
+        let message = "hello world"
+        
+        const schema = buildSchema(`
+        type post{
+          userId:Int
+          id:Int
+                 title:String
+          body:String
+        }
+
+        type user {
+          name:String
+          age:Int
+          colleage:String
+        }
+
+        type Query{
+          hello:String
+          welcomeMessage(name:String!):String
+          getuser:user
+          getusers:[user]
+          getPostsFromExternalAPI:[post]
+          message:String
+        }
+
+        input userInput{
+          name:String!
+          age:Int!
+          colleage:String!
+        }
+
+        type Mutation{
+          setMessage(newMessage:String):String
+          createUser(user:userInput):user
+        }
+        `);
+
+        const root = {
+          hello: () => {
+            return 'Hello World!';
+          },
+          welcomeMessage: (args) => {
+            return `hy ${args.name}, welcome`
+          },
+          getuser: () => {
+            const user = {
+              name: "raj",
+              age: 22,
+              colleage: "r.v patel"
+            };
+            return user;
+          },
+          getusers: () => {
+            const users = [
+              {
+                name: "raj",
+                age: 22,
+                colleage: "r.v patel"
+              },
+              {
+                name: "rajveer",
+                age: 22,
+                colleage: "r.v patel"
+              }
+            ]
+            return users;
+          },
+          getPostsFromExternalAPI: () => {
+            return axios.get('https://jsonplaceholder.typicode.com/posts').then(result => result.data)
+          },
+          setMessage: ({ newMessage }) => {
+            message = newMessage;
+            return message;
+          },
+          message: () => message,
+          createUser: (args) => {
+            return args.user;
+          }
+        };
+
+        app.use('/graphql', graphqlHTTP({
+          graphiql: true,
+          schema: schema,
+          rootValue: root
+        }))
+
 
 */
